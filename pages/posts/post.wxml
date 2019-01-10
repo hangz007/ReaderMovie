@@ -1,5 +1,5 @@
 <view>
-  <swiper indicator-dots="true" autoplay="true" interval="5000">
+  <swiper vertical="{{false}}" indicator-dots="true" autoplay="true" interval="5000">
     <swiper-item>
       <image src="/images/wx.png"></image>
     </swiper-item>
@@ -10,34 +10,24 @@
        <image src="/images/iqiyi.png"></image>
     </swiper-item>
   </swiper>
-  <view clas="post-container">
+
+
+  <block wx:for="{{posts_key}}" wx:key="item" >
+  <view class="post-container">
     <view class="post-author-date">
-    <image class="post-author" src="/images/avatar/1.png"></image>
-    <text class="post-date">Nov 25 2018</text>
+    <image class="post-author" src="{{item.author_img}}"></image>
+    <text class="post-date">{{item.date}}{{item.title}}</text>
     </view>
-    <text class="post-title">正是虾肥蟹壮时</text>
-    <image class="post-image" src="/images/post/crab.png"></image>
-    <text class="post-content">正是花开月正圆，此时不吃待何时</text>
+    <text class="post-title">{{item.title}}</text>
+    <image class="post-image" src="{{item.post_img}}"></image>
+    <text class="post-content">{{item.content}}</text>
     <view class="post-like">
       <image class="post-like-image" src="../../images/icon/chat.png"></image>
-      <text class="post-like-font">92</text>
+      <text class="post-like-font">{{item.collect_num}}</text>
       <image class="post-like-image" src="../../images/icon/view.png"></image>
-      <text class="post-like-font">65</text>
+      <text class="post-like-font">{{item.view_num}}</text>
     </view>
-
-     <view class="post-author-date">
-    <image class="post-author" src="/images/avatar/1.png"></image>
-    <text class="post-date">Nov 28 2018</text>
-    </view>
-    <text class="post-title">比利林恩</text>
-    <image class="post-image" src="/images/post/bl.png"></image>
-    <text class="post-content">金庸是武侠小说的泰山北斗式的人物</text>
-    <view class="post-like">
-      <image class="post-like-image" src="../../images/icon/chat.png"></image>
-      <text class="post-like-font">92</text>
-      <image class="post-like-image" src="../../images/icon/view.png"></image>
-      <text class="post-like-font">65</text>
-    </view>
-
   </view>
+  </block> 
+
 </view>
