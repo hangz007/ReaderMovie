@@ -5,7 +5,8 @@ var local_database = [{
     avatar: "/images/avatar/1.png",
     content: "虾肥蟹壮正当时,此时不吃待何时",
     reading: "112",
-    collection: "96"
+    collection: "96",
+    postId:0
   },
   {
     date: "Nov 19 2018",
@@ -14,7 +15,8 @@ var local_database = [{
     avatar: "/images/avatar/1.png",
     content: "比利林恩传奇的中场故事",
     reading: "92",
-    collection: "80"
+    collection: "80",
+    postId: 1
   },
   {
     date: "Oct 05 2014",
@@ -23,7 +25,8 @@ var local_database = [{
     avatar: "/images/avatar/3.png",
     content: "没有人不关心经济，经济影响到工作的稳定",
     reading: "133",
-    collection: "60"
+    collection: "60",
+    postId: 2
   },
   {
     date: "Dec 28 2019",
@@ -32,7 +35,8 @@ var local_database = [{
     avatar: "/images/avatar/3.png",
     content: "微应用主要特点是免安装、体积小、速度快，即用即走",
     reading: "42",
-    collection: "123"
+    collection: "123",
+    postId: 3
   },
   {
     date: "June 30 2019",
@@ -41,7 +45,8 @@ var local_database = [{
     avatar: "/images/avatar/3.png",
     content: "近几年来，微信小程序逐渐流行开来",
     reading: "120",
-    collection: "43"
+    collection: "43",
+    postId: 4
   },
   {
     date: "Nov 21 2018",
@@ -50,7 +55,8 @@ var local_database = [{
     avatar: "/images/avatar/5.png",
     content: "对于科学家发现外星生命体这件事，刘慈欣建议不要回答",
     reading: "150",
-    collection: "75"
+    collection: "75",
+    postId: 5
   }
 ]
 
