@@ -6,7 +6,7 @@ Page({
     // })
     // 页面跳转,跳转的页面和被跳转的页面相互独立
     wx.redirectTo({
-      url: '../posts/post',
+      url: '../posts/posts',
     })
   }
 })

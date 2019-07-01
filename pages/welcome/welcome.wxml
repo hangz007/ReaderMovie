@@ -1,7 +1,7 @@
 <view class="container">
-<image class="user-avatar" src="/images/avatar.jpg"></image>
-<text class="user-name"><text style="color:red">Hello</text>，七月</text>
-<view class="moto-container" bindtap="onTap">
-<text class="moto" >开始小程序之旅</text>
-</view>
+  <image class="user-avatar" src="/images/avatar.png"></image>
+  <text class="user-name">Hello，七月</text>
+  <view class="moto-container" bind:tap="onTap">
+    <text class="moto">开始小程序之旅</text>
+  </view>
 </view>

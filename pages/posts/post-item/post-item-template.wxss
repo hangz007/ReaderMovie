@@ -1,30 +1,22 @@
-.post-container {
-  display: flex;
-  flex-direction: column;
-  margin-top: 20rpx;
-  margin-bottom: 40rpx;
-  background-color: #fff;
-  border-top: 1px solid #ededed;
-  border-bottom: 1px solid hsl(0, 0%, 93%);
-  padding-bottom: 5px;
-}
-
 .post-author-date {
   /*margin-top: 10rpx;
   margin-bottom: 20rpx;
   margin-left: 10rpx;*/
   margin: 10rpx 0 20rpx 10rpx; 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .post-author {
   width: 60rpx;
   height: 60rpx;
-  vertical-align: middle;
+  /* vertical-align: middle; */ 
 }
 
 .post-date {
   margin-left: 20rpx;
-  vertical-align: middle;
+  /* vertical-align: middle; */
   margin-bottom: 5px;
   font-size: 26rpx;
 }
@@ -53,20 +45,18 @@
 }
 
 .post-like {
-  font-size: 13px;
+  font-size: 16px;
   flex-direction: row;
-  line-height: 16px;
-  margin-left: 10px;
+  align-items: center;
+  margin-left: 20rpx;
 }
 
 .post-like-image {
   height: 16px;
   width: 16px;
   margin-right: 8px;
-  vertical-align: middle;
 }
 
 .post-like-font {
-  vertical-align: middle;
-  margin-right: 20px;
+  margin-right: 40rpx;
 }
