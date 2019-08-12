@@ -1,19 +1,21 @@
-var postData = require('../../../data/posts-data.js')
+var postsData = require('../../../data/posts-data.js')
+var app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    isPlayingMusic:false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var globalData = app.globalData;
     var postId = options.id;
-    var post = postData.postList[postId];
+    var post = postsData.postList[postId];
     this.data.currentPostId = postId;
     this.setData({
       postData: post
@@ -29,6 +31,28 @@ Page({
       postsCollected[postId] = false;
       wx.setStorageSync("posts_collected", postsCollected);
     }
+    if (app.globalData.g_isPlayingMusic && app.globalData.g_currentMusicPostId===postId) {
+      this.setData({ isPlayingMusic:true});
+    }
+    this.setMusicMonitor();
+  },
+  setMusicMonitor:function() {
+    var that = this;
+    // 监听音乐播放
+    wx.onBackgroundAudioPlay(function () {
+      that.setData({
+        isPlayingMusic: true
+      });
+      app.globalData.g_isPlayingMusic = true;
+      app.globalData.g_currentMusicPostId = this.data.currentPostId;
+    });
+    wx.onBackgroundAudioPause(function () {
+      that.setData({
+        isPlayingMusic: false
+      });
+      app.globalData.g_isPlayingMusic = false;
+      app.globalData.g_currentMusicPostId = null;
+    });
   },
   onCollectionTap: function(event) {
     var postsCollected = wx.getStorageSync("posts_collected");
@@ -137,5 +161,25 @@ Page({
    */
   onShareAppMessage: function() {
 
+  },
+  onMusicTap:function(event) {
+    var isPlayingMusic = this.data.isPlayingMusic;
+    var currentPostId = this.data.currentPostId;
+    var postData = postsData.postList[currentPostId];
+    if (isPlayingMusic) {
+      wx.pauseBackgroundAudio();
+      this.setData({
+        isPlayingMusic:false
+      });
+    }else {
+      wx.playBackgroundAudio({
+        dataUrl: postData.music.url,
+        title: postData.music.title,
+        coverImageUrl: postData.music.coverImg
+      });
+      this.setData({
+        isPlayingMusic: true
+      });
+    }
   }
 })
