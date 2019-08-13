@@ -20,19 +20,24 @@ Page({
     this.setData({
       postData: post
     });
+    // 获取缓存对象posts_collected的值
     var postsCollected = wx.getStorageSync("posts_collected");
     if (postsCollected) {
       var postCollected = postsCollected[postId];
-      this.setData({
-        collected: postCollected
-      });
+      if (postCollected) {
+        this.setData({
+          collected: postCollected
+        });
+      }
     } else {
       var postsCollected = {};
       postsCollected[postId] = false;
       wx.setStorageSync("posts_collected", postsCollected);
     }
     if (app.globalData.g_isPlayingMusic && app.globalData.g_currentMusicPostId===postId) {
-      this.setData({ isPlayingMusic:true});
+      this.setData({ 
+          isPlayingMusic:true
+          });
     }
     this.setMusicMonitor();
   },
