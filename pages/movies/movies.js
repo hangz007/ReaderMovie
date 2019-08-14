@@ -29,6 +29,13 @@ Page({
     this.getMovieListData(comingSoonUrl,"comingSoon","即将上映");
     this.getMovieListData(top250Url,"top250","豆瓣Top250");
   },
+  onMoreTap:function(event) {
+    // 获取电影分类类型
+    var category = event.currentTarget.dataset.category;
+    wx.navigateTo({
+      url: 'more-movie/more-movie?category=' + category
+    });
+  },
   getMovieListData: function (url, settedKey,categoryTitle) {
     var that = this;
     wx.request({
