@@ -6,7 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    inTheaters:{},
+    comingSoon:{},
+    top250Url:{}
   },
 
   /**
@@ -15,19 +17,19 @@ Page({
   onLoad: function (options) {
     // 正在热映
     var webUrl = app.globalData.doubanBase;
-    var inTheatersUrl = webUrl+"/v2/movie/in_theaters";
+    var inTheatersUrl = webUrl+"/v2/movie/in_theaters"+"?start=0&count=3";
     // 即将上映
-    var comingSoonUrl = webUrl+"/v2/movie/coming_soon";
+    var comingSoonUrl = webUrl + "/v2/movie/coming_soon" + "?start=0&count=3";
     // 最热的250部电影
-    var top250Url = webUrl+"/v2/movie/top250";
+    var top250Url = webUrl + "/v2/movie/top250" + "?start=0&count=3";
     // 异步请求
-    this.getMovieListData(inTheatersUrl);
-    this.getMovieListData(comingSoonUrl);
-    this.getMovieListData(top250Url);
+    this.getMovieListData(inTheatersUrl,"inTheaters");
+    this.getMovieListData(comingSoonUrl,"comingSoon");
+    this.getMovieListData(top250Url,"top250");
 
   },
-
-  getMovieListData:function(url) {
+  getMovieListData:function(url,settedKey) {
+    var that = this;
     wx.request({
       url: url,
       method: 'GET',
@@ -35,12 +37,39 @@ Page({
         "Content-Type":"json"
       },
       success:function(res) {
-          console.log(res);
+        //  console.log(res);
+        that.processDoubanData(res.data, settedKey);
+
       },
       fail:function() {
         
       }
     })
+  },
+  // 处理豆瓣数据
+  processDoubanData: function (movicesDouban, settedKey) {
+    var movies = [];
+    // 遍历数据
+    for (var idx in movicesDouban.subjects) {
+      var subject = movicesDouban.subjects[idx];
+      var title = subject.title;
+      if(title.length>=6) {
+        title = title.substring(0,6)+"...";
+      }
+      var temp = {
+        title:title,
+        average:subject.rating.average,
+        coverageUrl:subject.images.large,
+        movieId:subject.id
+      }
+      movies.push(temp);
+      // 根据settedKey的不同，设置属性值。
+      var readyData = {};
+      readyData[settedKey]={
+        movies:movies
+      };
+      this.setData(readyData);
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
