@@ -25,12 +25,11 @@ Page({
     // 最热的250部电影
     var top250Url = webUrl + "/v2/movie/top250" + "?start=0&count=3";
     // 异步请求
-    this.getMovieListData(inTheatersUrl,"inTheaters");
-    this.getMovieListData(comingSoonUrl,"comingSoon");
-    this.getMovieListData(top250Url,"top250");
-
+    this.getMovieListData(inTheatersUrl,"inTheaters","正在热映");
+    this.getMovieListData(comingSoonUrl,"comingSoon","即将上映");
+    this.getMovieListData(top250Url,"top250","豆瓣Top250");
   },
-  getMovieListData:function(url,settedKey) {
+  getMovieListData: function (url, settedKey,categoryTitle) {
     var that = this;
     wx.request({
       url: url,
@@ -40,7 +39,7 @@ Page({
       },
       success:function(res) {
         //  console.log(res);
-        that.processDoubanData(res.data, settedKey);
+        that.processDoubanData(res.data, settedKey,categoryTitle);
 
       },
       fail:function() {
@@ -49,7 +48,7 @@ Page({
     })
   },
   // 处理豆瓣数据
-  processDoubanData: function (movicesDouban, settedKey) {
+  processDoubanData: function (movicesDouban, settedKey,categoryTitle) {
     var movies = [];
     // 遍历数据
     for (var idx in movicesDouban.subjects) {
@@ -69,6 +68,7 @@ Page({
       // 根据settedKey的不同，设置属性值。
       var readyData = {};
       readyData[settedKey]={
+        categoryTitle: categoryTitle,
         movies:movies
       };
       this.setData(readyData);
