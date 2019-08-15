@@ -6,8 +6,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    movies:{},
-    navigateTitle: ''
+    movies: {},
+    navigateTitle: '',
+    requestUrl: '',
+    totalCount: 0,
+    isEmpty: true
   },
   /**
    * 生命周期函数--监听页面加载
@@ -29,9 +32,13 @@ Page({
         dataUrl = webUrl + "/v2/movie/top250";
         break;
     }
+    // 设置请求Url
+    this.data.requestUrl = dataUrl;
     util.http(dataUrl, this.processDoubanData);
+    // 导航条提示加载
+    wx.showNavigationBarLoading();
   },
-  processDoubanData: function (movicesDouban) {
+  processDoubanData: function(movicesDouban) {
     var movies = [];
     // 遍历数据
     for (var idx in movicesDouban.subjects) {
@@ -47,8 +54,21 @@ Page({
         coverageUrl: subject.images.large,
         movieId: subject.id
       }
+      var totalMovies = {};
       movies.push(temp);
-      this.setData({ movies: movies});
+      // 如果要绑定新加载的数据，那么需要绑定旧的数据
+      if (!this.data.isEmpty) {
+        totalMovies = this.data.movies.concat(movies);
+      } else {
+        totalMovies = movies;
+        this.data.isEmpty = false;
+      }
+      this.setData({
+        movies: totalMovies
+      });
+      this.data.totalCount += 20;
+      // 隐藏导航条加载
+      wx.hideNavigationBarLoading();
     }
   },
   /**
@@ -58,5 +78,11 @@ Page({
     wx.setNavigationBarTitle({
       title: this.data.navigateTitle
     })
+  },
+  onScrollLower: function() {
+    var nextUrl = this.data.requestUrl + "?start=" +
+      this.data.totalCount + "&count=20";
+    util.http(nextUrl, this.processDoubanData);
   }
+
 })
