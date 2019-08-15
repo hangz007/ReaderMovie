@@ -10,7 +10,9 @@ Page({
   data: {
     inTheaters:{},
     comingSoon:{},
-    top250Url:{}
+    top250:{},
+    containerShow:true,
+    searchPannelShow:false
   },
 
   /**
@@ -81,52 +83,20 @@ Page({
       this.setData(readyData);
     }
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  onBindFocus:function(event) {
+    this.setData({
+      containerShow:false,
+      searchPannelShow:true
+    });
+    
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  onBindChange:function(event) {
+    console.log("show change");
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  onCancelImgTap:function(event) {
+    this.setData({
+      containerShow:true,
+      searchPannelShow:false
+    });
   }
 })
