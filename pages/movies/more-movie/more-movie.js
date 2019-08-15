@@ -35,8 +35,6 @@ Page({
     // 设置请求Url
     this.data.requestUrl = dataUrl;
     util.http(dataUrl, this.processDoubanData);
-    // 导航条提示加载
-    wx.showNavigationBarLoading();
   },
   processDoubanData: function(movicesDouban) {
     var movies = [];
@@ -54,22 +52,28 @@ Page({
         coverageUrl: subject.images.large,
         movieId: subject.id
       }
-      var totalMovies = {};
       movies.push(temp);
-      // 如果要绑定新加载的数据，那么需要绑定旧的数据
-      if (!this.data.isEmpty) {
-        totalMovies = this.data.movies.concat(movies);
-      } else {
-        totalMovies = movies;
-        this.data.isEmpty = false;
-      }
-      this.setData({
-        movies: totalMovies
-      });
-      this.data.totalCount += 20;
-      // 隐藏导航条加载
-      wx.hideNavigationBarLoading();
     }
+
+    var totalMovies = {};
+    // 如果要绑定新加载的数据，那么需要绑定旧的数据
+    if (!this.data.isEmpty) {
+      totalMovies = this.data.movies.concat(movies);
+    } else {
+      totalMovies = movies;
+      this.data.isEmpty = false;
+    }
+    this.setData({
+      movies: totalMovies
+    });
+    console.log("------------------------");
+    console.log(totalMovies);
+    console.log("------------------------");
+    this.data.totalCount += 20;
+    // 隐藏导航条加载
+    wx.hideNavigationBarLoading();
+    // 停止页面刷新
+    wx.stopPullDownRefresh();
   },
   /**
    * 设置导航栏标题
@@ -79,10 +83,27 @@ Page({
       title: this.data.navigateTitle
     })
   },
-  onScrollLower: function() {
-    var nextUrl = this.data.requestUrl + "?start=" +
-      this.data.totalCount + "&count=20";
-    util.http(nextUrl, this.processDoubanData);
+  // // 上拉加载更多数据
+  // onScrollLower: function() {
+  //   var nextUrl = this.data.requestUrl + "?start=" +
+  //   this.data.totalCount + "&count=20";
+  //   util.http(nextUrl, this.processDoubanData);
+  // },
+  // 屏蔽onScrollLower，新增onReachBottom函数，监控上拉刷新
+  onReachBottom: function (event) {
+    var nextUrl = this.data.requestUrl +
+      "?start=" + this.data.totalCount + "&count=20";
+    util.http(nextUrl, this.processDoubanData)
+    wx.showNavigationBarLoading()
+  },
+  // 下拉刷新数据
+  onPullDownRefresh: function() {
+    var refreshUrl = this.data.requestUrl + "?start=0&count=20";
+    this.data.movies = {};
+    this.data.isEmpty = true;
+    this.data.totalCount = 0;
+    util.http(refreshUrl, this.processDoubanData);
+    wx.showNavigationBarLoading();
   }
 
 })
