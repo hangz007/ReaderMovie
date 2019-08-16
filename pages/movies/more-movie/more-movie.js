@@ -66,9 +66,6 @@ Page({
     this.setData({
       movies: totalMovies
     });
-    console.log("------------------------");
-    console.log(totalMovies);
-    console.log("------------------------");
     this.data.totalCount += 20;
     // 隐藏导航条加载
     wx.hideNavigationBarLoading();
