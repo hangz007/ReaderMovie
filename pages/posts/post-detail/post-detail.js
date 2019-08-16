@@ -171,13 +171,6 @@ Page({
   onReachBottom: function() {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  },
   onMusicTap: function(event) {
     var isPlayingMusic = this.data.isPlayingMusic;
     var currentPostId = this.data.currentPostId;
@@ -196,6 +189,17 @@ Page({
       this.setData({
         isPlayingMusic: true
       });
+    }
+  },
+
+   /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function(event) {
+    return {
+      title: '离思五首·其四',
+      desc: '曾经沧海难为水，除却巫山不是云',
+      path: '/pages/posts/post-detail/post-detail?id=0'
     }
   }
 })
