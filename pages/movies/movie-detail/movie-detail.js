@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    movie:{}
+    movie: {}
   },
 
   /**
@@ -19,8 +19,8 @@ Page({
     util.http(url, this.processDoubanData);
   },
   processDoubanData: function(data) {
-    if(!data) {
-      return ;
+    if (!data) {
+      return;
     }
     var director = {
       avatar: "",
@@ -50,9 +50,15 @@ Page({
       castsInfo: util.convertToCastInfos(data.casts),
       summary: data.summary
     };
-    console.log(movie);
     this.setData({
       movie: movie
+    });
+  },
+  viewMoviePostImg:function(e) {
+    var src = e.currentTarget.dataset.src;
+    wx.previewImage({
+      urls: [src],
+      current:src
     });
   },
   /**

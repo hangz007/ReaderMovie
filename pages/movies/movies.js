@@ -91,12 +91,10 @@ Page({
     });
 
   },
-  onBindBlur: function(event) {
-    // 获取input组件中的值
+  onBindConfirm: function(event) {
     var text = event.detail.value;
     var searchUrl = app.globalData.doubanBase + "/v2/movie/search?q=" + text;
     this.getMovieListData(searchUrl, "searchResult", "");
-
   },
   onCancelImgTap: function(event) {
     this.setData({
@@ -105,10 +103,10 @@ Page({
       searchResult: {}
     });
   },
-  onMovieTap:function(event) {
+  onMovieTap: function(event) {
     var movieId = event.currentTarget.dataset.movieid;
     wx.navigateTo({
-      url: 'movie-detail/movie-detail?id='+movieId
+      url: 'movie-detail/movie-detail?id=' + movieId
     })
   }
 
